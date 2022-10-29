@@ -7,15 +7,7 @@ class Functions:
 
     response = requests.get(url=SHEET_ENDPOINT)
     data = response.json()
-    # chicken_cals = data["arkusz1"][0]["testCals"]
-    # beef_cals = data["arkusz1"][1]["testCals"]
     len_of_names = len(data["arkusz1"])
-    # print(data["arkusz1"][0])
-    # # kurwa jest ___________________________________________________ wyszukiwanie kalorii po nazwie
-    # for _ in range(0, len_of_names):
-    #     if data["arkusz1"][_]["testName"] == "Kurczak":
-    #         print(data["arkusz1"][_]["testCals"])
-    #
 
     def name_chose(self):
         self.names =[]
@@ -61,6 +53,3 @@ class Functions:
         return f"Summary calories : {(sum(self.sum_cal))}, Summary proteins : {(sum(self.sum_prot))}, " \
                f"Summary carbohydrates : {(sum(self.sum_carb))}" \
                f"Summary fat : {(sum(self.sum_fat))}"
-
-# {'Meal 1': '(Calories : 164.0, proteins : 31.0, carbohydrates : 0.0, fat : 3.6)',
-# 'Meal 2': '(Calories : 328.0, proteins : 62.0, carbohydrates : 0.0, fat : 7.2)'}

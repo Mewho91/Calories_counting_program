@@ -38,4 +38,4 @@ for meals in range(0, user_input):
             end = False
     d["Meal {0}".format(meals+1)] = {"Cal" : calories, "prot": proteins, "carb" : carbo, "fat" : fat}
 
-print(fc.sum_of_all_meals(d))
+print(f"From {user_input} Meals \n {fc.sum_of_all_meals(d)}")
