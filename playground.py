@@ -35,8 +35,26 @@ class Playground:
                 self.fat = float(self.data["arkusz1"][_]["fat"]) * prod_gram
             return f"cal {self.cal}, prot {self.protein}, carbo {self.carbo}, fat {self.fat}"
 
-
-
+    def count_calories(self, prod_input, prod_gram):
+        for _ in range(0, self.len_of_names):
+            if self.data["arkusz1"][_]["testName"] == prod_input:
+                self.cal = float(self.data["arkusz1"][_]["testCals"]) * prod_gram
+        return self.cal
+    def count_protein(self, prod_input, prod_gram):
+        for _ in range(0, self.len_of_names):
+            if self.data["arkusz1"][_]["testName"] == prod_input:
+                self.protein = float(self.data["arkusz1"][_]["protein"]) * prod_gram
+        return self.protein
+    def count_carb(self, prod_input, prod_gram):
+        for _ in range(0, self.len_of_names):
+            if self.data["arkusz1"][_]["testName"] == prod_input:
+                self.carbo = float(self.data["arkusz1"][_]["carbo"]) * prod_gram
+        return self.carbo
+    def count_fat(self, prod_input, prod_gram):
+        for _ in range(0, self.len_of_names):
+            if self.data["arkusz1"][_]["testName"] == prod_input:
+                self.fat = float(self.data["arkusz1"][_]["fat"]) * prod_gram
+        return self.fat
 
     # if chicken_name == "Kurczak":
     #     print(chicken_cals)
