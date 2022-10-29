@@ -1,6 +1,6 @@
-import playground
+import functions
 
-fc = playground.Playground()
+fc = functions.Functions()
 # START
 print("Welcome to calories counting program!")
 MAX_MEALS = 8
@@ -34,7 +34,8 @@ for meals in range(0, user_input):
         carbo += fc.count_carb(product_input, gramature_input)
         fat += fc.count_fat(product_input, gramature_input)
         if finished == "y":
-            print(f"Your {meals + 1} Meal is  calories:  {calories}, carbohydrates : {carbo}, proteins {proteins}, fat {fat}")
+            print(f"Your {meals + 1} Meal is  calories:  {calories}, proteins: {proteins},carbohydrates: {carbo}, fat: {fat}")
             end = False
-    d["Meal {0}".format(meals+1)] = f"(Calories : {calories}, proteins : {proteins}, carbohydrates : {carbo}, fat : {fat})"
-    print(d)
+    d["Meal {0}".format(meals+1)] = {"Cal" : calories, "prot": proteins, "carb" : carbo, "fat" : fat}
+
+print(fc.sum_of_all_meals(d))
