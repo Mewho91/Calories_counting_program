@@ -1,10 +1,29 @@
 import requests
+import enum
+
+
+def how_many_meals(max_meals, min_meals):
+    is_ok = True
+    while is_ok:
+        user_input = int(input("Select how many meals do you want to count? \n"))
+        if user_input > max_meals or user_input < min_meals:
+            print("Are you sure of that ?")
+        else:
+            print(f"You chosed {user_input} meals")
+            is_ok = False
+    return user_input
+
+
+class Data(enum.Enum):
+    CALORIES = "testCals"
+    CARBS = "carbo"
+    PROT = "protein"
+    FAT = "fat"
 
 
 class Functions:
-    # ________________________________________read requests
-    SHEET_ENDPOINT = "https://api.sheety.co/39c535bbf835a3ced3a84cfc3061120f/caloriesProgram/arkusz1"
 
+    SHEET_ENDPOINT = "https://api.sheety.co/39c535bbf835a3ced3a84cfc3061120f/caloriesProgram/arkusz1"
     response = requests.get(url=SHEET_ENDPOINT)
     data = response.json()
     len_of_names = len(data["arkusz1"])
@@ -15,41 +34,25 @@ class Functions:
             self.names.append(self.data["arkusz1"][name]["testName"])
         return self.names
 
-    def count_calories(self, prod_input, prod_gram):
+
+    def count(self, prod_input, prod_gram, c_name):
+        counted = 0
         for _ in range(0, self.len_of_names):
             if self.data["arkusz1"][_]["testName"] == prod_input:
-                self.cal = float(self.data["arkusz1"][_]["testCals"]) * prod_gram
-        return round(self.cal, 2)
+                counted = float(self.data["arkusz1"][_][c_name]) * prod_gram
+        return round(counted, 2)
 
-    def count_protein(self, prod_input, prod_gram):
-        for _ in range(0, self.len_of_names):
-            if self.data["arkusz1"][_]["testName"] == prod_input:
-                self.protein = float(self.data["arkusz1"][_]["protein"]) * prod_gram
-        return round(self.protein, 2)
-
-    def count_carb(self, prod_input, prod_gram):
-        for _ in range(0, self.len_of_names):
-            if self.data["arkusz1"][_]["testName"] == prod_input:
-                self.carbo = float(self.data["arkusz1"][_]["carbo"]) * prod_gram
-        return round(self.carbo, 2)
-
-    def count_fat(self, prod_input, prod_gram):
-        for _ in range(0, self.len_of_names):
-            if self.data["arkusz1"][_]["testName"] == prod_input:
-                self.fat = float(self.data["arkusz1"][_]["fat"]) * prod_gram
-        return round(self.fat, 2)
-
-    def sum_of_all_meals(self, dict):
+    def sum_of_all_meals(self, d):
         self.sum_cal = []
         self.sum_prot = []
         self.sum_carb = []
         self.sum_fat = []
-        for key in dict:
-            self.sum_cal.append(dict[key]['Cal'])
-            self.sum_prot.append(dict[key]['prot'])
-            self.sum_carb.append(dict[key]['carb'])
-            self.sum_fat.append(dict[key]['fat'])
+        for key in d:
+            self.sum_cal.append(d[key]['Cal'])
+            self.sum_prot.append(d[key]['prot'])
+            self.sum_carb.append(d[key]['carb'])
+            self.sum_fat.append(d[key]['fat'])
 
-        return f"Summary calories : {(sum(self.sum_cal))}, Summary proteins : {(sum(self.sum_prot))}, " \
-               f"Summary carbohydrates : {(sum(self.sum_carb))}" \
-               f"Summary fat : {(sum(self.sum_fat))}"
+        return f"Summary calories: {round(sum(self.sum_cal), 2)}, Summary proteins: {round(sum(self.sum_prot), 2)}, " \
+               f"Summary carbohydrates: {round(sum(self.sum_carb),2)}" \
+               f"Summary fat: {round(sum(self.sum_fat), 2)}"
