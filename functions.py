@@ -34,7 +34,6 @@ class Functions:
             self.names.append(self.data["arkusz1"][name]["testName"])
         return self.names
 
-
     def count(self, prod_input, prod_gram, c_name):
         counted = 0
         for _ in range(0, self.len_of_names):
