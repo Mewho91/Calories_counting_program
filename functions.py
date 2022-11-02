@@ -2,16 +2,7 @@ import requests
 import enum
 
 
-def how_many_meals(max_meals, min_meals):
-    is_ok = True
-    while is_ok:
-        user_input = int(input("Select how many meals do you want to count? \n"))
-        if user_input > max_meals or user_input < min_meals:
-            print("Are you sure of that ?")
-        else:
-            print(f"You chosed {user_input} meals")
-            is_ok = False
-    return user_input
+
 
 
 class Data(enum.Enum):
