@@ -1,14 +1,16 @@
 import functions
-
+import gui
 
 fc = functions.Functions()
-
+g = gui.Gui()
 # START
 print("Welcome to calories counting program!")
 MAX_MEALS = 8
 MIN_MEALS = 1
 
-number_of_meals = functions.how_many_meals(MAX_MEALS, MIN_MEALS)
+
+g.open_popup()
+number_of_meals = int(g.meal_number_get())
 
 d = {}
 
