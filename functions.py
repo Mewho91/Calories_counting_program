@@ -2,7 +2,16 @@ import requests
 import enum
 
 
-
+def how_many_meals(max_meals, min_meals):
+    is_ok = True
+    while is_ok:
+        user_input = int(input("Select how many meals do you want to count? \n"))
+        if user_input > max_meals or user_input < min_meals:
+            print("Are you sure of that ?")
+        else:
+            print(f"You chosed {user_input} meals")
+            is_ok = False
+    return user_input
 
 
 class Data(enum.Enum):
@@ -30,7 +39,7 @@ class Functions:
         for _ in range(0, self.len_of_names):
             if self.data["arkusz1"][_]["testName"] == prod_input:
                 counted = float(self.data["arkusz1"][_][c_name]) * prod_gram
-        return round(counted, 2)
+        return int(round(counted, 2))
 
     def sum_of_all_meals(self, d):
         self.sum_cal = []

@@ -21,7 +21,7 @@ class Gui:
         self.scroll.current(0)
         self.scroll.grid(column=0, row=3)
 
-        self.button1 = Button(text="Confirm", command=lambda: [self.product_get, self.product_gram])
+        self.button1 = Button(text="Confirm", command=lambda: [self.product_get(), self.product_gram, root.destroy()])
         self.button1.grid(column=2, row=3)
 
         self.entry_value = IntVar()
@@ -66,3 +66,4 @@ class Gui:
     def product_gram(self):
         self.product_gram = self.entry_value.get()
         return self.product_gram
+
