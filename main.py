@@ -31,12 +31,14 @@ for meals in range(0, number_of_meals):
         # product_input = input(f"Please chose a product to add {fc.name_chose()}\n")
         grams_input = g.gram
         # grams_input = int(input("how much grams of this product ?\n"))
-        finished = str(input("Have you finished on this meal? 'y' for yes or 'n' for no \n")).lower()
+        # finished = str(input("Have you finished on this meal? 'y' for yes or 'n' for no \n")).lower()
+        finished = g.next_meal()
         calories += fc.count(product_input, grams_input, functions.Data.CALORIES.value)
         proteins += fc.count(product_input, grams_input, functions.Data.PROT.value)
         carbo += fc.count(product_input, grams_input, functions.Data.CARBS.value)
         fat += fc.count(product_input, grams_input, functions.Data.FAT.value)
-        if finished == "y":
+        if g.finished:
+            # g.meals()
             print(f"Your {meals + 1} Meal is  calories:  {calories}, proteins: {proteins},carbohydrates: {carbo},"
                   f" fat: {fat}")
 

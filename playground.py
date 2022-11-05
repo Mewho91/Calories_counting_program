@@ -9,3 +9,4 @@ while end:
     g.run_gui()
     print(g.product_gram())
     print(g.product_get())
+    g.meals()
