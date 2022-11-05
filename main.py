@@ -21,6 +21,8 @@ for meals in range(0, number_of_meals):
     proteins = 0
     carbo = 0
     fat = 0
+    # g.results(calories, meals)
+    g.results(d)
 
     end = True
     while end:
@@ -38,7 +40,7 @@ for meals in range(0, number_of_meals):
         carbo += fc.count(product_input, grams_input, functions.Data.CARBS.value)
         fat += fc.count(product_input, grams_input, functions.Data.FAT.value)
         if g.finished:
-            # g.meals()
+            # g.results(calories, meals)
             print(f"Your {meals + 1} Meal is  calories:  {calories}, proteins: {proteins},carbohydrates: {carbo},"
                   f" fat: {fat}")
 
@@ -46,3 +48,5 @@ for meals in range(0, number_of_meals):
     d["Meal {0}".format(meals + 1)] = {"Cal": calories, "prot": proteins, "carb": carbo, "fat": fat}
 
 print(f"{d} From {number_of_meals} Meals \n {(fc.sum_of_all_meals(d))}")
+
+g.results(d)

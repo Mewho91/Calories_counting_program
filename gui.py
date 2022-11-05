@@ -1,3 +1,4 @@
+import tkinter
 from tkinter import *
 from tkinter.ttk import *
 import functions
@@ -11,7 +12,7 @@ class Gui:
         self.box_value = None
         self.product_value = None
         self.entry_value = None
-        self.finished = None
+        self.finished = False
 
     def open_popup(self):
         root = Tk()
@@ -87,10 +88,15 @@ class Gui:
     def this(self):
         self.finished = False
 
-    def meals(self, ):
-        mealss = Tk()
-        mealss.title("meals?")
-        mealss.config(padx=100, pady=20)
-        for meals in range(0, self.meal_count):
-            label = Label(width=17, font=("Times", "10", "bold"), text=f"This is your {self.meal_count} meal")
-            label.grid(column=5, row=0)
+    def results(self, d):
+        result_window = Tk()
+        result_window.title("Results")
+        result_window.config(padx=100, pady=20)
+
+        new_label = Label(text=f"{d}")
+        new_label.grid(column=1, row=1 + self.meal_count)
+
+        result_button = Button(text="Continue", command=lambda: [result_window.destroy()])
+        result_button.grid(column=0, row=0)
+
+        result_window.mainloop()
