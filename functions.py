@@ -41,6 +41,12 @@ class Functions:
                 counted = float(self.data["arkusz1"][_][c_name]) * prod_gram
         return int(round(counted, 2))
 
+    def return_name(self, prod_input):
+        for _ in range(0, self.len_of_names):
+            if self.data["arkusz1"][_]["testName"] == prod_input:
+                name = prod_input
+        return name
+
     def sum_of_all_meals(self, d):
         self.sum_cal = []
         self.sum_prot = []

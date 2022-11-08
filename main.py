@@ -23,7 +23,7 @@ for meals in range(0, number_of_meals):
     proteins = 0
     carbo = 0
     fat = 0
-
+    # ----------------------------------- udalo sie zrobic listę nazw na koncu wyprintowana
     end = True
     while end:
         g.run_gui()
@@ -31,6 +31,7 @@ for meals in range(0, number_of_meals):
         product_input = g.product
         grams_input = g.gram
         finished = g.next_meal()
+        list_names.append(fc.return_name(product_input))
         calories += fc.count(product_input, grams_input, functions.Data.CALORIES.value)
         proteins += fc.count(product_input, grams_input, functions.Data.PROT.value)
         carbo += fc.count(product_input, grams_input, functions.Data.CARBS.value)
@@ -59,4 +60,4 @@ for m in range (0, number_of_meals):
 sums = g.sum_of_all(list_cals, list_prots, list_carbs, list_fat)
 g.results(result_list, sums)
 
-
+print(list_names)
