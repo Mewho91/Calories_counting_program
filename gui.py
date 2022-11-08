@@ -14,6 +14,7 @@ class Gui:
         self.entry_value = None
         self.finished = False
 
+
     def open_popup(self):
         root = Tk()
         root.title("Number of meals")
@@ -38,6 +39,7 @@ class Gui:
         self.meal_count = int(self.box_value.get())
 
     def run_gui(self):
+
         fc = functions.Functions()
         root = Tk()
         root.title("Calories count program")
@@ -52,8 +54,10 @@ class Gui:
         scroll.current(0)
         scroll.grid(column=0, row=3)
 
-        button1 = Button(text="Confirm", command=lambda: [self.product_get(), self.product_gram(), root.destroy()])
+        button1 = Button(text="Confirm", command=lambda: [self.product_get(), self.product_gram()])
         button1.grid(column=2, row=3)
+        button2 = Button(text="Finish", command=lambda: [root.destroy()])
+        button2.grid(column=2, row=4)
 
         self.entry_value = IntVar()
         gramature_entry_label = Label(width=25, font=("Times", "10", "bold"), text="Enter a gramature of product")
@@ -62,6 +66,11 @@ class Gui:
         entry.grid(column=1, row=3)
 
         root.mainloop()
+
+    #
+    # def add_label(self, name):
+    #     new_label = Label(text=name)
+    #     new_label.grid(column=0, row=5)
 
     def product_get(self):
         self.product = self.product_value.get()
@@ -88,15 +97,26 @@ class Gui:
     def this(self):
         self.finished = False
 
-    def results(self, d):
+    def results(self, r, sums):
         result_window = Tk()
         result_window.title("Results")
         result_window.config(padx=100, pady=20)
+        for item in r:
+            new_label = Label(text=item)
+            new_label.grid(column=1, row=r.index(item) + 1)
 
-        new_label = Label(text=f"{d}")
-        new_label.grid(column=1, row=1 + self.meal_count)
+        result_label = Label(text=sums)
+        result_label.grid(column=1, row=9)
 
         result_button = Button(text="Continue", command=lambda: [result_window.destroy()])
-        result_button.grid(column=0, row=0)
+        result_button.grid(column=1, row=12)
 
         result_window.mainloop()
+
+    def sum_of_all(self, cal, prot, carb, fat):
+        sum_cal = sum(cal)
+        sum_prot = sum(prot)
+        sum_carb = sum(carb)
+        sum_fat = sum(fat)
+
+        return f"Sum of calories : {sum_cal}, sum of proteins :  {sum_prot}, sum of carbs : {sum_carb}, sum of fat: {sum_fat}"
