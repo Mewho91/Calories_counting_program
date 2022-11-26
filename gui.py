@@ -52,17 +52,14 @@ class Gui:
         scroll.current(0)
         scroll.grid(column=0, row=3)
 
-        button1 = Button(text="Confirm", command=lambda: [self.product_get(), self.product_gram()])
-        button1.grid(column=2, row=3)
-        button2 = Button(text="Finish", command=lambda: [root.destroy()])
-        button2.grid(column=2, row=4)
-
         self.entry_value = IntVar()
         gramature_entry_label = Label(width=25, font=("Times", "10", "bold"), text="Enter a gramature of product")
         gramature_entry_label.grid(column=1, row=2)
         entry = Entry(width=25, font=("Times", "10", "bold"), textvariable=self.entry_value)
         entry.grid(column=1, row=3)
 
+        button1 = Button(text="Confirm", command=lambda: [self.product_get(), self.product_gram(), root.destroy()])
+        button1.grid(column=2, row=3)
         root.mainloop()
 
     def product_get(self):
@@ -75,6 +72,9 @@ class Gui:
         root = Tk()
         root.title("Next meal ?")
         root.config(padx=100, pady=20)
+
+        label = Label(text=f"You added {self.product} : {self.gram} grams")
+        label.grid(column=0, row=2)
 
         button_next_meal = Button(root, text="Next meal", command=lambda: [self.next(), root.destroy()])
         button_next_meal.grid(column=0, row=1)
@@ -119,8 +119,7 @@ class Gui:
         sum_carb = sum(carb)
         sum_fat = sum(fat)
 
-
-        return f"Sum of calories : {sum_cal}, sum of proteins :  {sum_prot}, sum of carbs : {sum_carb}, sum of fat: {sum_fat}"
+        return f"Summary calories : {sum_cal}, proteins :  {sum_prot}, carbs : {sum_carb}, fat: {sum_fat}"
 
     def prods(self, prod_input, gram_input, meal):
         return f"Meal {meal + 1} - Product : {prod_input}, grams : {gram_input}"
@@ -137,4 +136,12 @@ class Gui:
                 values.append(f"{b[0]} {b[1]} grams")
         return values
 
+    def return_list_added(self, l):
+        val = []
+        for i in l:
+            val.append(i)
+        new_val = ("".join(val))
+        if len(new_val) > 1:
+            return f"Your meal contains:\n"\
+                   f"{new_val}"
 
