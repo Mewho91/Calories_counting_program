@@ -14,15 +14,14 @@ class Gui:
         self.entry_value = None
         self.finished = False
 
-
     def open_popup(self):
         root = Tk()
         root.title("Number of meals")
         root.config(padx=100, pady=100)
 
-        open_label = Label(width=40, font=("Times", "15", "bold"), text="Welcome to calories counting program")
+        open_label = Label(root, width=40, font=("Times", "15", "bold"), text="Welcome to calories counting program")
         open_label.grid(row=0, columnspan=2)
-        open_label2 = Label(width=40, font=("Times", "15", "bold"), text="Chose number of meals and press confirm")
+        open_label2 = Label(root, width=40, font=("Times", "15", "bold"), text="Chose number of meals and press confirm")
         open_label2.grid(row=1, columnspan=2)
 
         self.box_value = StringVar()
@@ -30,7 +29,7 @@ class Gui:
         meal_chose_scroll['values'] = (1, 2, 3, 4, 5, 6, 7, 8)
         meal_chose_scroll.grid(column=0, row=3, columnspan=1)
 
-        button1 = Button(text="Confirm", width=40, command=lambda: [self.meal_number_get(), root.destroy()])
+        button1 = Button(root, text="Confirm", width=40, command=lambda: [self.meal_number_get(), root.destroy()])
         button1.grid(column=1, row=3)
 
         root.mainloop()
@@ -39,7 +38,6 @@ class Gui:
         self.meal_count = int(self.box_value.get())
 
     def run_gui(self):
-
         fc = functions.Functions()
         root = Tk()
         root.title("Calories count program")
@@ -67,27 +65,25 @@ class Gui:
 
         root.mainloop()
 
-    #
-    # def add_label(self, name):
-    #     new_label = Label(text=name)
-    #     new_label.grid(column=0, row=5)
-
     def product_get(self):
         self.product = self.product_value.get()
 
     def product_gram(self):
         self.gram = int(self.entry_value.get())
 
-    def next_meal(self):
+    def next_meal(self, x):
         root = Tk()
         root.title("Next meal ?")
         root.config(padx=100, pady=20)
 
-        button_next_meal = Button(text="Next meal", command=lambda: [self.next(), root.destroy()])
+        button_next_meal = Button(root, text="Next meal", command=lambda: [self.next(), root.destroy()])
         button_next_meal.grid(column=0, row=1)
 
-        button_this_meal = Button(text="Add to this meal", command=lambda: [self.this(), root.destroy()])
+        button_this_meal = Button(root, text="Add to this meal", command=lambda: [self.this(), root.destroy()])
         button_this_meal.grid(column=1, row=1)
+
+        label = Label(text=x)
+        label.grid(column=0, rowspan=1)
 
         root.mainloop()
 
@@ -101,6 +97,7 @@ class Gui:
         result_window = Tk()
         result_window.title("Results")
         result_window.config(padx=100, pady=20)
+
         for item in r:
             new_label = Label(text=item)
             new_label.grid(column=1, row=r.index(item) + 1)
@@ -108,8 +105,11 @@ class Gui:
         result_label = Label(text=sums)
         result_label.grid(column=1, row=9)
 
-        result_button = Button(text="Continue", command=lambda: [result_window.destroy()])
-        result_button.grid(column=1, row=12)
+        save_button = Button(text="Save diet", command=lambda: [result_window.destroy()])
+        save_button.grid(column=1, row=12)
+
+        result_button = Button(text="Close program", command=lambda: [result_window.destroy()])
+        result_button.grid(column=0, row=12)
 
         result_window.mainloop()
 
@@ -119,4 +119,22 @@ class Gui:
         sum_carb = sum(carb)
         sum_fat = sum(fat)
 
+
         return f"Sum of calories : {sum_cal}, sum of proteins :  {sum_prot}, sum of carbs : {sum_carb}, sum of fat: {sum_fat}"
+
+    def prods(self, prod_input, gram_input, meal):
+        return f"Meal {meal + 1} - Product : {prod_input}, grams : {gram_input}"
+
+    def dict_prods(self, prod_input, gram_input):
+        dictio = f"({prod_input, gram_input}"
+        return dictio
+
+    def what_u_added_to_meal(self, d):
+        values = []
+        for a in d:
+            values.append(f"In {a} you added ")
+            for b in d[a]:
+                values.append(f"{b[0]} {b[1]} grams")
+        return values
+
+
