@@ -60,7 +60,6 @@ while True:
     sums = g.sum_of_all(list_cals, list_prots, list_carbs, list_fat)
     g.what_u_added_to_meal(meals_name_and_gramature)
     g.last_window(result_list, sums)
-    print(result_list)
 
     reset = g.y
     if reset == 0:

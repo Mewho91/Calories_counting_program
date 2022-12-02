@@ -1,6 +1,9 @@
+import os.path
+import tkinter.messagebox
 from tkinter import *
 from tkinter.ttk import *
 import functions
+import json
 
 
 class Gui:
@@ -13,12 +16,13 @@ class Gui:
         self.product_value = None
         self.entry_value = None
         self.finished = False
+        self.save_name = None
 
     def first_window(self):
         root = Tk()
         root.title("Number of meals")
 
-        my_img = PhotoImage(file="warzywa.png")
+        my_img = PhotoImage(file="vegetables.png")
 
         canvas = Canvas(root, width=600, height=380)
         canvas.pack(fill="both", expand=True)
@@ -47,7 +51,7 @@ class Gui:
         root = Tk()
         root.title("Calories count program")
 
-        my_img = PhotoImage(file="drugie okno program.png")
+        my_img = PhotoImage(file="second window.png")
         canvas = Canvas(root, width=470, height=650)
         canvas.pack()
         canvas.create_image(10, 0, image=my_img, anchor="nw")
@@ -81,7 +85,7 @@ class Gui:
         root = Tk()
         root.title("Next meal ?")
 
-        my_img = PhotoImage(file="trzecie okno.png")
+        my_img = PhotoImage(file="third window.png")
         canvas = Canvas(root, width=520, height=350)
         canvas.pack()
         canvas.create_image(0, 0, image=my_img, anchor="nw")
@@ -122,15 +126,19 @@ class Gui:
         canvas.create_window(100, 750, width=100, height=80, window=restart_button)
         result_button = Button(text="Close program", command=lambda: [self.close_program(), result_window.destroy()])
         canvas.create_window(550, 750, width=100, height=80, window=result_button)
+        save_button = Button(text="Save diet", command=lambda: [result_window.destroy(), self.save_diet()])
+        canvas.create_window(300, 750, width=100, height=80, window=save_button)
 
         result_window.mainloop()
 
     def sum_of_all(self, cal, prot, carb, fat):
-        sum_cal = sum(cal)
-        sum_prot = sum(prot)
-        sum_carb = sum(carb)
-        sum_fat = sum(fat)
-        return f"Summary calories : {sum_cal}, proteins :  {sum_prot}, carbs : {sum_carb}, fat: {sum_fat}"
+        self.sum_cal = sum(cal)
+        self.sum_prot = sum(prot)
+        self.sum_carb = sum(carb)
+        self.sum_fat = sum(fat)
+        self.summary =  f"Summary calories : {self.sum_cal}, proteins :  {self.sum_prot}, carbs : {self.sum_carb}, " \
+                        f"fat: {self.sum_fat}"
+        return self.summary
 
     def prods(self, prod_input, gram_input, meal):
         return f"Meal {meal + 1} - Product : {prod_input}, grams : {gram_input}"
@@ -151,7 +159,6 @@ class Gui:
         val = []
         for i in l:
             val.append(i)
-        #     ("".join(val)
         new_val = ("".join(val).replace(",", "\n"))
         if len(new_val) > 1:
             return f"Your meal contains:\n {new_val}"
@@ -163,3 +170,44 @@ class Gui:
     def close_program(self):
         self.y = 1
         return self.y
+
+    def save_diet(self):
+        save_window = Tk()
+        save_window.title("Save window")
+
+        image = PhotoImage(file="save load window.png")
+        canvas = Canvas(save_window, width=800, height=350)
+        canvas.pack()
+        canvas.create_image(0, 0, image=image, anchor="nw")
+
+        self.user_input = StringVar()
+        self.user_name_input = Entry(width=33, textvariable=self.user_input)
+        user_name_label = Label(text="Insert name of diet", font=("Times", 20))
+        canvas.create_window(500,100, window=self.user_name_input)
+        canvas.create_window(200,100, window=user_name_label)
+
+        save_button = Button(text="Save", command=self.save)
+        canvas.create_window(300,200, window=save_button)
+        exit = Button(text="Exit", command=save_window.destroy)
+        canvas.create_window(500,200, window=exit)
+
+        save_window.mainloop()
+
+    def save(self):
+        self.save_name = self.user_input.get()
+        new_data = {self.save_name: {
+                # "contents": main.result_list,
+                "macronutrients": self.summary
+                }
+        }
+        try:
+            with open("dietdata.json", "r") as dt:
+                dtjson = json.load(dt)
+        except FileNotFoundError:
+
+            with open("dietdata.json", "w") as dt:
+                json.dump(new_data, dt, indent=2)
+        else:
+            dtjson.update(new_data)
+            with open("dietdata.json", "w") as dt:
+                json.dump(dtjson, dt, indent=2)
