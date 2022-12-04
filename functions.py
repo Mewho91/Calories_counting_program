@@ -61,3 +61,41 @@ class Functions:
         return f"Summary calories: {round(sum(self.sum_cal), 2)}, Summary proteins: {round(sum(self.sum_prot), 2)}, " \
                f"Summary carbohydrates: {round(sum(self.sum_carb),2)}" \
                f"Summary fat: {round(sum(self.sum_fat), 2)}"
+
+
+    def bmi_calc(self, height, weight):
+        bmi = weight/((height/100)*(height/100))
+        result = round(bmi, 2)
+        if result >= 40:
+            bmi_result = "its 3rd degree obesity"
+        elif (result >= 35) and (result <= 39.9):
+            bmi_result = "its 2rd degree obesity"
+        elif (result >= 30) and (result <= 34.9):
+            bmi_result = "ts 1rd degree obesity"
+        elif (result >= 25) and (result <= 29.9):
+            bmi_result = " its overweight"
+        elif (result >= 18.5) and (result <= 24.9):
+            bmi_result = " its correct weight"
+        elif (result >= 17) and (result <= 18.5):
+            bmi_result = " its underweight"
+        elif (result >= 16) and (result <= 16.9):
+            bmi_result = " its emaciation"
+        else :
+            bmi_result = " its starvation"
+
+        return f" Your BMI is : {result}, {bmi_result}"
+
+    def calories_calc(self, gender, work, weight, height, age):
+        if gender == "male" :
+            BMR = (9.99*weight)+(6.25*height)-(5*age)+5 + 300
+        else:
+            BMR = (9.99 * weight) + (6.25 * height) - (5 * age) - 161 + 300
+
+        if work == "Sitting job":
+            CPM = BMR * 1.2
+        elif work == "Middle intensity":
+            CPM = BMR * 1.5
+        else:
+            CPM = BMR * 1.8
+
+        return f"Your total metabolism is :  {CPM} kcal"

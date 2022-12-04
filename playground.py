@@ -1,6 +1,13 @@
+import functions
+import gui
 import json
 
-with open("dietdata.json") as diets:
-    j = json.load(diets)
+g = gui.Gui()
+f = functions.Functions()
 
-print(len(j))
+# f = open('dietdata.json')
+# data = json.load(f)
+# a = "aaa"
+# print(data[a])
+g.load_diet()
+
