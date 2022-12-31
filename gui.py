@@ -75,7 +75,7 @@ class Gui:
                                                  self.is_process_button_pressed()])
         canvas.create_window(420, 400, height=30, anchor="nw", window=process_button)
 
-        load_diet_button = Button(root, width=30, text="Load diet")
+        load_diet_button = Button(root, width=30, text="Load diet", command=lambda :[root.destroy(), self.load_diet()])
         canvas.create_window(220, 400, height=30, anchor="nw", window=load_diet_button)
 
         pass_bmi_count = Button(root, width=30, text="Skip calculator", command=root.destroy)
@@ -312,8 +312,12 @@ class Gui:
         scroll['values'] = self.load_diet_lists_by_names()
         canvas.create_window(40, 100, height=50, width=250, anchor="nw", window=scroll)
 
-        load_button = Button(text="Load", command=lambda:[self.load_get(), self.search_for_loaded_list()])
+        load_button = Button(text="Load", command=lambda:[self.load_get(), self.search_for_loaded_list(),
+                                                          load.destroy(), self.loading_window()])
         canvas.create_window(300, 200, window=load_button)
+
+        quit_button = Button(text="Quit", command=lambda: [load.destroy()])
+        canvas.create_window(150, 200, window=quit_button)
 
         load.mainloop()
 
@@ -334,7 +338,30 @@ class Gui:
         f = open('dietdata.json')
         data = json.load(f)
 
-        return print(data[self.list_to_be_loaded])
+        self.r = data[self.list_to_be_loaded]['macronutrients']
+        self.s = data[self.list_to_be_loaded]['contents']
+
+        return self.r, self.s
+
+    def loading_window(self):
+        loading_window = Tk()
+        loading_window.title("Loading window")
+
+        my_img = PhotoImage(file="notepad2.png")
+        canvas = Canvas(loading_window, width=520, height=800)
+        canvas.pack()
+        canvas.create_image(0, 0, image=my_img, anchor="nw")
+
+        skip = Button(text="Skip", command=lambda: [loading_window.destroy()])
+        canvas.create_window(100, 750, width=100, height=50, window=skip)
+        print(self.r, self.s)
+        for i in self.s:
+            label_contents = Label(text=f"{i}", font=("Times", 10))
+            canvas.create_window(200, 100 + self.s.index(i) * 80, window=label_contents)
+
+        makro_label = Label(text = f"{self.r}", font=("Times", 10))
+        canvas.create_window(200, 700, window=makro_label)
+        loading_window.mainloop()
 
     def all_counting(self):
         fc = functions.Functions()
